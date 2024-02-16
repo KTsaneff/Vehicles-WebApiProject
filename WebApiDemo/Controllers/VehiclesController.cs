@@ -12,10 +12,10 @@ namespace WebApiDemo.Controllers
             return $"Reading all the vehicles.";
         }
 
-        [HttpGet("{id}")]
-        public string GetVehicleById(int id)
+        [HttpGet("{id}/{brand}")]
+        public string GetVehicleById(int id, [FromRoute]string brand)
         {
-            return $"Reading information for vehicle with ID: {id}";
+            return $"Reading information for vehicle( ID-{id} Brand: {brand})";
         }
 
         [HttpPost]
