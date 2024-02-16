@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApiDemo.Models;
 
 namespace WebApiDemo.Controllers
 {
@@ -12,14 +13,16 @@ namespace WebApiDemo.Controllers
             return $"Reading all the vehicles.";
         }
 
-        [HttpGet("{id}/{brand}")]
-        public string GetVehicleById(int id, [FromRoute]string brand)
+        [HttpGet("{id}")]
+        public string GetVehicleById(int id)
+        //public string GetVehicleById(int id, [FromQuery]string brand)
+        //public string GetVehicleById(int id, [FromHeader(Name = "Brand")]string brand)
         {
-            return $"Reading information for vehicle( ID-{id} Brand: {brand})";
+            return $"Reading information for vehicle( ID-{id})";
         }
 
         [HttpPost]
-        public string CreateVehicle()
+        public string CreateVehicle([FromForm]Vehicle vehicle)
         {
             return $"Creating a new vehicle";
         }
