@@ -18,9 +18,11 @@ namespace WebApiDemo.Models
         public string? VehicleType { get; set; }
 
         [EnumDataType(typeof(Engine))]
-        public Engine? Engine { get; set; }
+        [Required]
+        public Engine Engine { get; set; }
 
-        public MonthYear? ProductionDate { get; set; }
+        [Required]
+        public MonthYear ProductionDate { get; set; }
 
     }
 }

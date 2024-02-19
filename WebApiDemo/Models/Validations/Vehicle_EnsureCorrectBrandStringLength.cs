@@ -12,11 +12,11 @@ namespace WebApiDemo.Models.Validations
             {
                 if (vehicle?.Brand?.Length < 2)
                 {
-                    return new ValidationResult("Vehicle Brand cannot be less than 2 symbols.");
+                    return new ValidationResult("VehicleRepository Brand cannot be less than 2 symbols.");
                 }
                 else if (vehicle?.Brand?.Length > 50)
                 {
-                    return new ValidationResult("Vehicle Brand max length is 50 symbols.");
+                    return new ValidationResult("VehicleRepository Brand max length is 50 symbols.");
                 }
             }
             return ValidationResult.Success;
