@@ -104,6 +104,16 @@
             vehicles.Add(vehicle);
         }
 
+        public static void UpdateVehicle(Vehicle vehicle)
+        {
+            var vehicleToUpdate = vehicles.First(v => v.Id == vehicle.Id);
 
+            vehicleToUpdate.Brand = vehicle.Brand;
+            vehicleToUpdate.Model = vehicle.Model;
+            vehicleToUpdate.VehicleType = vehicle.VehicleType;
+            vehicleToUpdate.Engine = vehicle.Engine;
+            vehicleToUpdate.ProductionDate = vehicle.ProductionDate;
+
+        }
     }
 }

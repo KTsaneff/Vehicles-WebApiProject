@@ -19,21 +19,35 @@ namespace WebApiDemo.Controllers
         [Vehicle_ValidateVehicleIdFilter]
         public IActionResult GetVehicleById(int id)
         {
-           return Ok(VehicleRepository.GetVehicleById(id));
+            return Ok(VehicleRepository.GetVehicleById(id));
         }
 
         [HttpPost]
         [Vehicle_ValidateCreateVehicleFilter]
         public IActionResult CreateVehicle([FromBody] Vehicle vehicle)
-        {           
+        {
             VehicleRepository.AddVehicle(vehicle);
             return CreatedAtAction(nameof(GetVehicleById), new { id = vehicle.Id }, vehicle);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateVehicle(int id)
+        [Vehicle_ValidateVehicleIdFilter]
+        [Vehicle_ValidateUpdateVehicleFilter]
+        public IActionResult UpdateVehicle(int id, Vehicle vehicle)
         {
-            return Ok($"Updating vehicle with ID: {id}");
+           try
+            {
+                VehicleRepository.UpdateVehicle(vehicle);
+            }
+            catch (Exception)
+            {
+                if (!VehicleRepository.VehicleExists(id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
