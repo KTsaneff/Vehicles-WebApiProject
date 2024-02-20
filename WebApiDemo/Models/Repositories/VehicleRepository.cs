@@ -113,7 +113,15 @@
             vehicleToUpdate.VehicleType = vehicle.VehicleType;
             vehicleToUpdate.Engine = vehicle.Engine;
             vehicleToUpdate.ProductionDate = vehicle.ProductionDate;
+        }
 
+        public static void DeleteVehicle(int vehicleId)
+        {
+            var vehicle = GetVehicleById(vehicleId);
+            if (vehicle != null)
+            {
+                vehicles.Remove(vehicle);
+            }
         }
     }
 }

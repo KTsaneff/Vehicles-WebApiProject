@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using WebApiDemo.Models.Repositories;
 
-namespace WebApiDemo.Filters
+namespace WebApiDemo.Filters.ActionFilters
 {
     public class Vehicle_ValidateVehicleIdFilterAttribute : ActionFilterAttribute
     {
@@ -12,9 +12,9 @@ namespace WebApiDemo.Filters
 
             var vehicleId = context.ActionArguments["id"] as int?;
 
-            if(vehicleId.HasValue)
+            if (vehicleId.HasValue)
             {
-                if(vehicleId.Value <= 0)
+                if (vehicleId.Value <= 0)
                 {
                     context.ModelState.AddModelError("VehicleId", "VehicleId is invalid.");
 
@@ -24,7 +24,7 @@ namespace WebApiDemo.Filters
                     };
                     context.Result = new BadRequestObjectResult(problemDetails);
                 }
-                else if(!VehicleRepository.VehicleExists(vehicleId.Value))
+                else if (!VehicleRepository.VehicleExists(vehicleId.Value))
                 {
                     context.ModelState.AddModelError("VehicleId", "Vehicle doesn't exist.");
 

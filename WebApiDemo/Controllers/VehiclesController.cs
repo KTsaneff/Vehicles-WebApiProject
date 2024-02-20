@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApiDemo.Filters;
+using WebApiDemo.Filters.ActionFilters;
+using WebApiDemo.Filters.ExceptionFilters;
 using WebApiDemo.Models;
 using WebApiDemo.Models.Repositories;
 
@@ -27,33 +28,29 @@ namespace WebApiDemo.Controllers
         public IActionResult CreateVehicle([FromBody] Vehicle vehicle)
         {
             VehicleRepository.AddVehicle(vehicle);
+
             return CreatedAtAction(nameof(GetVehicleById), new { id = vehicle.Id }, vehicle);
         }
 
         [HttpPut("{id}")]
         [Vehicle_ValidateVehicleIdFilter]
         [Vehicle_ValidateUpdateVehicleFilter]
+        [Vehicle_HandleUpdateExceptionsFilter]
         public IActionResult UpdateVehicle(int id, Vehicle vehicle)
         {
-           try
-            {
-                VehicleRepository.UpdateVehicle(vehicle);
-            }
-            catch (Exception)
-            {
-                if (!VehicleRepository.VehicleExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
+            VehicleRepository.UpdateVehicle(vehicle);
+
             return NoContent();
         }
 
         [HttpDelete("{id}")]
+        [Vehicle_ValidateVehicleIdFilter]
         public IActionResult DeleteVehicle(int id)
         {
-            return Ok($"Deleting vehicle with ID: {id}");
+            var vehicle = VehicleRepository.GetVehicleById(id);
+            VehicleRepository.DeleteVehicle(id);
+
+            return Ok(vehicle);
         }
     }
 }

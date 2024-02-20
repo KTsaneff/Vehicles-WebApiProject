@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using WebApiDemo.Models;
 using WebApiDemo.Models.Repositories;
 
-namespace WebApiDemo.Filters
+namespace WebApiDemo.Filters.ActionFilters
 {
     public class Vehicle_ValidateCreateVehicleFilterAttribute : ActionFilterAttribute
     {
