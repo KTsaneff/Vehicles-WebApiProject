@@ -33,7 +33,7 @@ namespace WebApiDemo.Controllers
         }
 
         [HttpPut("{id}")]
-        [Vehicle_ValidateVehicleIdFilter]
+        //[Vehicle_ValidateVehicleIdFilter]
         [Vehicle_ValidateUpdateVehicleFilter]
         [Vehicle_HandleUpdateExceptionsFilter]
         public IActionResult UpdateVehicle(int id, Vehicle vehicle)
