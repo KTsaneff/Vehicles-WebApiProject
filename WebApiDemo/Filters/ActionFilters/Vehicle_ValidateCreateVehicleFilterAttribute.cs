@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using WebApiDemo.Data;
 using WebApiDemo.Models;
 using WebApiDemo.Models.Repositories;
 
@@ -7,6 +8,11 @@ namespace WebApiDemo.Filters.ActionFilters
 {
     public class Vehicle_ValidateCreateVehicleFilterAttribute : ActionFilterAttribute
     {
+        private ApplicationDbContext _dbcContext;
+        public Vehicle_ValidateCreateVehicleFilterAttribute(ApplicationDbContext dbContext)
+        {
+            _dbcContext = dbContext;
+        }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
@@ -24,8 +30,15 @@ namespace WebApiDemo.Filters.ActionFilters
             }
             else
             {
-                var existingVehicle = VehicleRepository
-                .GetVehicleByProperties(vehicle.Brand, vehicle.Model, vehicle.Engine.ToString(), vehicle.ProductionDate.Month, vehicle.ProductionDate.Year);
+                var existingVehicle = _dbcContext.Vehicles.FirstOrDefault(v =>
+                    !string.IsNullOrWhiteSpace(vehicle.Brand) &&
+                    !string.IsNullOrWhiteSpace(v.Brand) &&
+                    v.Brand.ToLower() == vehicle.Brand.ToLower() &&
+                    !string.IsNullOrWhiteSpace(vehicle.Model) &&
+                    !string.IsNullOrWhiteSpace(v.Model) &&
+                    v.Model.ToLower() == vehicle.Model.ToLower() &&
+                    v.Engine == vehicle.Engine &&
+                    v.ProductionDate.Year == vehicle.ProductionDate.Year);
 
                 if (existingVehicle != null)
                 {
