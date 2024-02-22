@@ -22,7 +22,7 @@ namespace WebApiDemo.Models
         public Engine Engine { get; set; }
 
         [Required]
-        public MonthYear ProductionDate { get; set; }
+        public DateTime ProductionDate { get; set; }
 
     }
 }
